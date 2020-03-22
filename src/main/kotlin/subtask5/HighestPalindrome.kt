@@ -4,7 +4,7 @@ class HighestPalindrome {
 
     private val NINE = 9
 
-    // TODO: Complete the following function
+    // TODO: Improve the solution
     fun highestValuePalindrome(n: Int, k: Int, digitString: String): String {
         var digits = digitString.toCharArray()
         var counter = k
@@ -22,12 +22,39 @@ class HighestPalindrome {
             rightCounter--
 
             if(leftCounter == rightCounter && counter > 0)
-                digits[leftCounter] = NINE.toChar()
+                digits[leftCounter] = '9'
         }
 
         if (counter < 0) {
             return "-1"
         }
+
+        leftCounter = 0
+        rightCounter = n - 1
+
+        while(leftCounter <= rightCounter){
+             if (digits[leftCounter].toString().toInt() < NINE) {
+                 if(counter >= 2) {
+                     digits[leftCounter] = '9'
+                     digits[rightCounter] = '9'
+                     counter -= 2
+                 } else {
+                     if (counter >=1 &&
+                         (digits[leftCounter] != digitString[leftCounter] ||
+                         digits[rightCounter] != digitString[rightCounter])) {
+                         digits[leftCounter] = '9'
+                         digits[rightCounter] = '9'
+                         counter--
+                     }
+                 }
+             }
+
+            leftCounter++
+            rightCounter--
+
+        }
+
+
         var palindrome = ""
         for (digit in digits) {
             palindrome+=digit
